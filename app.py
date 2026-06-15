@@ -129,7 +129,7 @@ if not os.path.exists(DB_PATH):
 # ── Sidebar ───────────────────────────────────────────────────────────────
 with st.sidebar:
     st.markdown("## ⚙️ Configuration")
-   api_key = st.text_input(...) or st.secrets.get("OPENAI_API_KEY", "")
+    api_key = st.text_input(...) or st.secrets.get("OPENAI_API_KEY", "")
     st.markdown("---")
     st.markdown("### 📩 Email Settings")
     recipient = st.text_input("Recipient email", placeholder="analyst@company.com")
