@@ -129,7 +129,14 @@ if not os.path.exists(DB_PATH):
 # ── Sidebar ───────────────────────────────────────────────────────────────
 with st.sidebar:
     st.markdown("## ⚙️ Configuration")
-    api_key = st.text_input(...) or st.secrets.get("OPENAI_API_KEY", "")
+    _secret_key = st.secrets.get("OPENAI_API_KEY", "")
+    api_key = st.text_input(
+        "OpenAI API Key",
+        value=_secret_key,
+        type="password",
+        placeholder="sk-...",
+        help="Auto-filled from Streamlit secrets if set, otherwise paste your key here.",
+    )
     st.markdown("---")
     st.markdown("### 📩 Email Settings")
     recipient = st.text_input("Recipient email", placeholder="analyst@company.com")
