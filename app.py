@@ -124,6 +124,15 @@ st.markdown("""
 # ── Bootstrap DB (idempotent) ─────────────────────────────────────────────
 if not os.path.exists(DB_PATH):
     init_db()
+else:
+    # Verify the table actually exists (guards against a corrupt/empty /tmp file)
+    try:
+        con = sqlite3.connect(DB_PATH)
+        con.execute("SELECT 1 FROM sales LIMIT 1")
+        con.close()
+    except sqlite3.OperationalError:
+        con.close()
+        init_db()
 
 
 # ── Sidebar ───────────────────────────────────────────────────────────────
@@ -177,11 +186,16 @@ kpi_df = pd.read_sql("""
 con.close()
 
 k = kpi_df.iloc[0]
+total_revenue = float(k.total_revenue or 0)
+total_profit  = float(k.total_profit  or 0)
+customers     = int(k.customers       or 0)
+orders        = int(k.orders          or 0)
+
 c1, c2, c3, c4 = st.columns(4)
-c1.metric("Total Revenue",  f"${k.total_revenue:,.0f}")
-c2.metric("Total Profit",   f"${k.total_profit:,.0f}")
-c3.metric("Customers",      int(k.customers))
-c4.metric("Total Orders",   int(k.orders))
+c1.metric("Total Revenue", f"${total_revenue:,.0f}")
+c2.metric("Total Profit",  f"${total_profit:,.0f}")
+c3.metric("Customers",     customers)
+c4.metric("Total Orders",  orders)
 
 st.markdown("---")
 
