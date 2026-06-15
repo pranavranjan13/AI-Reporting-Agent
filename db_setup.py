@@ -14,7 +14,8 @@ import numpy as np
 from datetime import datetime, timedelta
 import random
 
-DB_PATH = "sales.db"
+import os
+DB_PATH = os.path.join("/tmp", "sales.db")
 
 CUSTOMERS = [
     "Acme Corp", "BlueStar Inc", "CloudNine Ltd", "DataBridge Co",
