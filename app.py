@@ -129,12 +129,7 @@ if not os.path.exists(DB_PATH):
 # ── Sidebar ───────────────────────────────────────────────────────────────
 with st.sidebar:
     st.markdown("## ⚙️ Configuration")
-    api_key = st.text_input(
-        "OpenAI API Key",
-        type="password",
-        placeholder="sk-...",
-        help="Your key is never stored — it lives in session state only.",
-    )
+   api_key = st.text_input(...) or st.secrets.get("OPENAI_API_KEY", "")
     st.markdown("---")
     st.markdown("### 📩 Email Settings")
     recipient = st.text_input("Recipient email", placeholder="analyst@company.com")
